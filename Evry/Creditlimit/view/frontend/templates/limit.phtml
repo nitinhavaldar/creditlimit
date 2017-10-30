@@ -1,0 +1,165 @@
+
+<?php 
+
+$customBlock= $block->getLayout()->createBlock('\Evry\Bulkenquiry\Block\Bulkenquiry');
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$urlInterface = $objectManager->get('\Magento\Framework\UrlInterface');
+$customerSession = $customBlock->getCustomerSession();
+
+if(!$customerSession->isLoggedIn()) :
+    $customerSession->setAfterAuthUrl($urlInterface->getCurrentUrl());
+    $customerSession->authenticate(); ?>
+
+<?php else :
+
+$cid = $this->getCustomerSession()->getId();
+$home_url = $this->helper('Evry\Bulkenquiry\Helper\Data')->getBaseUrl();
+
+$limit = $this->getAvailableLimits($cid)->getFirstItem()->getCreditLimit();
+$formatted_limit = $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($limit,true,false);?>
+
+<p><?php echo __('Your Available Credit Limit is '."<span style='color:green'>".$formatted_limit."</span>");?></p>
+
+<?php if($limit > 0) : ?> 
+    <button type="button" name="transfer_funds" id="transfer-funds"><?php echo __('Send to Buddy')?></button>
+<?php endif; ?>
+
+
+<div class="customer-history" style="margin-top: 5%">
+
+<?php echo $this->getLayout()->createBlock("Evry\Creditlimit\Block\Creditlimit")->setTemplate("Evry_Creditlimit::transfer.phtml")->toHtml(); ?>   
+
+</div>
+
+<div class="customer-history" style="margin-top: 5%;">
+
+<h1><?php echo __('Transaction History');?></h1>
+<?php echo $this->getLayout()->createBlock("Evry\Creditlimit\Block\Creditlimit")->setTemplate("Evry_Creditlimit::history.phtml")->toHtml(); ?>   
+
+</div>
+<?php endif;?>
+<script type="text/x-magento-init">
+    {
+        "#buddy": {
+            "validation": {}
+        }
+    }
+</script>
+
+<script type="text/javascript">
+require([
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+function($n,modal) {
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                title: 'Send it to your Buddy',
+                
+            };
+            var popup = modal(options, $n('#send-it-to-buddy'));
+            $n('#transfer-funds').on('click',function() 
+            {
+                
+                 $n("#send-it-to-buddy").modal(options).modal('openModal');
+            });
+        }    
+);
+</script>
+
+<script type="text/javascript">
+    require([
+    "jquery",
+    "jquery/ui"
+], function($n){
+//<![CDATA[
+    
+    $n = jQuery.noConflict();
+    $n(document).ready(function() 
+    {
+        var error = false;
+        $n('.amount').on('blur',function() {
+            
+            var amount = this.value;
+            var limit  = '<?php echo $limit ?>';
+            if(amount > limit) {
+                $n('.error').html('you dont have enough limit to send');
+                $n('.action').attr('disabled','disabled');
+                return false;
+
+            }
+            else {
+                $n('.error').hide();
+                $n('.action').removeAttr('disabled','disabled');
+            }
+        });
+
+        $n('.email').on('blur',function() {
+            
+            var $email = this.value;
+            $n.ajax({
+                     showLoader: false,
+                     url: '<?php echo $this->checkCustomerUrl()?>',
+                     data: {email: $email},
+                     type: 'POST',
+                     datatype:'json'
+                    
+                    }).done(function(res) { 
+                       
+                        var $response = res['responseJson'];
+                        var $message = res['message'];
+
+                        if($response=='success') {
+                            $n('.success-msg').show();
+                            $n('.success-msg').html($message);
+                            $n('.cid').val(res['cid']);
+                            $n('.action').removeAttr('disabled','disabled');
+                            $n('.error-msg').hide();
+                        }
+                        else {
+                            $n('.error-msg').show();
+                            $n('.error-msg').html($message);
+                            $n('.success-msg').hide();
+                            $n('.action').attr('disabled','disabled');
+                        }
+                            
+                    });
+            
+        });
+
+        //form submit
+        $n("#send-to-buddy").submit(function(e) {
+
+                var isValid = $n(this).validation('isValid');
+                e.preventDefault();
+                if(isValid==true) {
+                        $n.ajax({
+                                    showLoader:true,
+                                    url: '<?php echo $this->transferLimitUrl()?>',
+                                    data: {data: $n('#send-to-buddy').serialize()},
+                                    type: 'POST',
+                                    datatype:'json'
+                            }).done(function(res) { 
+                                   
+                                   var $response = res['responseJson'];
+                                   var $msg = res['message'];
+                                   if($response=='success') {
+                                        window.location.href='<?php echo $home_url;?>'+'creditlimit';
+
+                                   }
+                                   
+                                        
+                                });
+               }
+        });
+
+    });
+
+    
+
+});
+</script>
+
+

@@ -1,0 +1,56 @@
+<div class="send-it-to-buddy" id="send-it-to-buddy" style="min-height: 100px">
+<form name="buddy" id="send-to-buddy" action="" method="post" action="<?php echo $this->transferLimitUrl();?>" data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>"
+      data-mage-init='{"validation":{}}'>
+ 
+ <fieldset class="fieldset create info">
+    
+ 	<div class="field field-name-from required">
+        <label class="label" for="from">
+            <span>From</span>
+        </label>
+		
+		<div class="control">
+            <input id="from" name="from" value="<?php echo $this->getCustomerSession()->getEmail();?>" title="From" class="input-text required-entry" data-validate="{required:true}" autocomplete="off" aria-required="true" type="text" disabled="disabled">
+                     
+        </div>
+    </div>
+
+
+    <div class="field field-name-email required">
+        <label class="label" for="email">
+            <span>To</span>
+        </label>
+		
+		<div class="control">
+            <input id="email" name="email" value="" title="Email" class="email input-text required-entry validate-email" data-validate="{required:true}" autocomplete="off" aria-required="true" type="text" placeholder="Email you want to send">
+            <span class="success-msg" style="color:#006400"></span>
+             <span class="error-msg" style="color:#e02b27"></span>
+             <input type="hidden" name="cid" class="cid">        
+        </div>
+    </div>
+
+
+
+
+    <div class="field field-name-amount required">
+        <label class="label" for="amount">
+            <span>Amount</span>
+        </label>
+		
+		<div class="control">
+            <input id="amount" name="amount" value="" title="Amount" class="amount input-text required-entry validate-number" data-validate="{required:true}" autocomplete="off" aria-required="true" type="text" placeholder="Amount">
+            <span class="error" style="color:#e02b27"></span>
+                     
+        </div>
+    </div>
+
+    
+
+    <div class="primary">
+        <button type="submit" class="action submit primary" title="Submit"><span>Submit</span></button>
+    </div>
+ </fieldset>
+
+</form>
+</div>
+

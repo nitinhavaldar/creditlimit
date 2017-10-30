@@ -1,0 +1,47 @@
+<?php $home_url = $this->helper('Evry\Bulkenquiry\Helper\Data')->getBaseUrl(); ?>
+<?php if ($this->getReportCollection() && count($this->getReportCollection())): ?>
+    <div class="table-wrapper reviews">
+                <table class="data table table-reviews" id="my-request-table">
+                    <caption class="table-caption"><?php /* @escapeNotVerified */ echo __('Product Requests') ?></caption>
+                    <thead>
+                        <tr>
+                            <th scope="col" class="col date"><?php /* @escapeNotVerified */ echo __('Placed On') ?></th>
+                            <th scope="col" class="col item"><?php /* @escapeNotVerified */ echo __('Order ID') ?></th>
+                            <th scope="col" class="col summary"><?php /* @escapeNotVerified */ echo __('Initial Credits') ?></th>
+                            <th scope="col" class="col description"><?php /* @escapeNotVerified */ echo __('Used Credits') ?></th>
+                            <th scope="col" class="col description"><?php /* @escapeNotVerified */ echo __('Available Credits') ?></th>
+                            <th scope="col" class="col description"><?php /* @escapeNotVerified */ echo __('Credit Usage (in %)') ?></th>
+                            
+                            <th scope="col" class="col actions">&nbsp;</th>
+                        </tr>
+                    </thead>
+
+                     <tbody>
+                        
+                        <?php foreach ($this->getReportCollection() as $_item): ?>
+                        <?php $order_id = $this->getOrderRealId($_item->getOrderId()); ?>
+                        <tr>
+                            <td data-th="<?php echo $block->escapeHtml(__('Placed On')) ?>" class="col date"><?php /* @escapeNotVerified */ echo $_item->getCreatedAt(); ?></td>
+                            <td data-th="<?php echo $block->escapeHtml(__('Order ID')) ?>" class="col date"> <a href="<?php echo $home_url;?>/sales/order/view/order_id/<?php echo $order_id;?>" target="_blank"><?php //echo $_request->getProductName(); ?><?php /* @escapeNotVerified */ echo $_item->getOrderId(); ?></a></td>
+                            <td data-th="<?php echo $block->escapeHtml(__('Initial Credits')) ?>" class="col item">
+                            <?php /* @escapeNotVerified */ echo $_item->getInitialCredits(); ?>
+                           </td>
+                                
+                            <td data-th="<?php echo $block->escapeHtml(__('Used Credits')) ?>" class="col item">
+                            <?php echo $_item->getUsedCredits(); ?></td>
+                            <td data-th="<?php echo $block->escapeHtml(__('Available Credits')) ?>" class="col item">
+                            <?php echo $_item->getAvailableCredits(); ?></td>
+                             <td data-th="<?php echo $block->escapeHtml(__('Credit Usage (in %)')) ?>" class="col item">
+                            <?php echo $_item->getCreditUsage(); ?></td>
+                           
+                            
+                            
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                    
+                </table>
+            </div>
+<?php else: ?>
+    <div class="message info empty"><span><?php /* @escapeNotVerified */ echo __('No Transaction history to show.') ?></span></div>
+<?php endif; ?>

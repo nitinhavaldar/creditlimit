@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!-- @Evry India Pvt Ltd -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="customer_account_navigation">
+            <block class="Magento\Framework\View\Element\Html\Link\Current" name="customer-account-navigation-credit-limit" after="-">
+                <arguments>
+                    <argument name="path" xsi:type="string">creditlimit</argument>
+                    <argument name="label" xsi:type="string">My Credit Limits</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

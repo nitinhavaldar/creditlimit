@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="customer_register_success">
+        <observer name="Evry_Creditlimit_Customer_Save_After" instance="Evry\Creditlimit\Observer\customerSaveAfter" />
+    </event>
+    <event name="sales_order_place_before">
+        <observer name="Evry_Creditlimit_Checkout_Onepage_Success" instance="Evry\Creditlimit\Observer\orderSaveAfter" />
+    </event>
+</config>  	
