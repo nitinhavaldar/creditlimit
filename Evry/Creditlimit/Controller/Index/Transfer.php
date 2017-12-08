@@ -11,18 +11,15 @@ use Magento\Checkout\Model\Cart;
 use Magento\Store\Model\StoreManagerInterface;
 use \Magento\Framework\Exception\LocalizedException;
 use Evry\Creditlimit\Model\CreditlimitFactory; 
-use Evry\Uploadorder\Helper\Data;
-use Evry\Uploadorder\Block\Uploadorder;
-use Evry\Uploadorder\Controller\Index;
-use Evry\Creditlimit\Block\Creditlimit;
 use \Magento\Framework\Stdlib\DateTime\DateTime;
+use Evry\Creditlimit\Block\Creditlimit;
+
 
 class Transfer extends Action
 {
     
    
     protected $_requestInfo;
-    protected $_helper;
     protected $_customerSession;
     protected $_jsonFactory;
     protected $_block;
@@ -34,7 +31,6 @@ class Transfer extends Action
     
     
     public function __construct(Context $context,
-                                Data $helper,
                                 Session $customerSession,
                                 CreditlimitFactory $requestInfo,
                                 JsonFactory $jsonFactory,
@@ -46,7 +42,6 @@ class Transfer extends Action
     {
         
         parent::__construct($context);
-        $this->_helper = $helper;
         $this->_block = $block;
         $this->_customerSession = $customerSession;
         $this->_requestInfo = $requestInfo;
@@ -162,10 +157,3 @@ class Transfer extends Action
     }   
 }
 
-
-// $sql = "INSERT INTO MyGuests (firstname, lastname, email)
-// VALUES ('John', 'Doe', 'john@example.com')";
-
-
-// $sql = "INSERT INTO ".$tableName."(entity_id,customer_id,customer_email,credit_limit,created_at) 
-//         VALUES (".)
