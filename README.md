@@ -11,7 +11,7 @@ The Credit Limit for Magento 2.x extension allows you to set a customer credit l
 
 # How to Install
 1) Clone the latest from repository
-2) Unzip the extracted files to the app/code/Evry/Creditlimit & app/code/Evry/Payonaccount
+2) Extract files in the Magento root directory in the folder app/code/Evry/Creditlimit & app/code/Evry/Payonaccount
 3) php bin/magento setup:upgrade
 4) php bin/magento setup:di:compile
 5) php bin/magento cache:clean
