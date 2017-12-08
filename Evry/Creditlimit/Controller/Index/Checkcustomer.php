@@ -8,33 +8,25 @@ use \Magento\Framework\Stdlib\DateTime\DateTime;
 use \Magento\Framework\Exception\LocalizedException;
 use \Magento\Customer\Model\Session;
 use \Magento\Customer\Model\CustomerFactory;
-use Evry\Bulkenquiry\Model\BulkenquiryFactory;
-use Evry\Bulkenquiry\Block\Bulkenquiry;
 use Magento\Framework\Controller\Result\JsonFactory;
 
 class Checkcustomer extends Action
 {
-    
-    protected $_modelBulkenquiryFactory;
     protected $_resultPageFactory;
     protected $date;
     protected $_customerSession;
-    protected $_block;
     protected $_jsonFactory;
     protected $_customerModel;
     
     public function __construct(Context $context,
            PageFactory $resultPageFactory,DateTime 
-           $date,BulkenquiryFactory $modelBulkenquiryFactory,
-           Session $customerSession, 
-           Bulkenquiry $block,JsonFactory $jsonFactory,CustomerFactory $customerModel)
+           $date,Session $customerSession,JsonFactory $jsonFactory,
+           CustomerFactory $customerModel)
     {
         
         parent::__construct($context);
         $this->date = $date;
-        $this->block = $block;
         $this->_resultPageFactory = $resultPageFactory;
-        $this->_modelBulkenquiryFactory = $modelBulkenquiryFactory;
         $this->_customerSession = $customerSession;
         $this->_customerModel = $customerModel;
         $this->_jsonFactory = $jsonFactory;

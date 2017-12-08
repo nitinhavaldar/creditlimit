@@ -1,10 +1,8 @@
 
 <?php 
-
-$customBlock= $block->getLayout()->createBlock('\Evry\Bulkenquiry\Block\Bulkenquiry');
 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 $urlInterface = $objectManager->get('\Magento\Framework\UrlInterface');
-$customerSession = $customBlock->getCustomerSession();
+$customerSession = $this->getCustomerSession();
 
 if(!$customerSession->isLoggedIn()) :
     $customerSession->setAfterAuthUrl($urlInterface->getCurrentUrl());
