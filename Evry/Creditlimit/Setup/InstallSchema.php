@@ -29,7 +29,7 @@ $installer->getTable('credit_limit')
 ->addColumn('created_at',\Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,null,['nullable' => false],'Created At')
 ->setComment('Evry India');
 $installer->getConnection()->createTable($table);
-
+$table = $installer->getConnection()->newTable(
 $installer->getTable('credit_limit_report')
             )->addColumn('report_id',\Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,null,['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],'Report Id')
             ->addColumn('customer_id',\Magento\Framework\DB\Ddl\Table::TYPE_TEXT,255,['nullable' => true],'Customer ID')
@@ -42,7 +42,7 @@ $installer->getTable('credit_limit_report')
             ->addColumn('created_at',\Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,null,['nullable' => false],'Created At')
             ->setComment('Evry India');
             $installer->getConnection()->createTable($table);
-			
+$table = $installer->getConnection()->newTable(
 $installer->getTable('credit_limit_wallet')
             )->addColumn('wallet_id',\Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,null,['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],'Wallet Id')
             ->addColumn('from_email',\Magento\Framework\DB\Ddl\Table::TYPE_TEXT,255,['nullable' => true],'From Email')
