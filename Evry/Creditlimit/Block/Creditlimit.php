@@ -6,7 +6,7 @@ use Magento\Framework\Exception\LocalizedException;
 use \Magento\Sales\Api\Data\OrderInterface;
 use Evry\Creditlimit\Model\CreditlimitFactory;
 use Evry\Creditlimit\Model\CreditlimitreportFactory;
-use Evry\Bulkenquiry\Helper\Data;
+use Evry\Creditlimit\Helper\Data;
 
 
 
@@ -20,11 +20,11 @@ class Creditlimit extends \Magento\Framework\View\Element\Template
 	protected $_order;
 
 	public function __construct(Context $context,
-								Session $customerSession,CreditlimitFactory $requestModel,
-								Data $helper,
-								CreditlimitreportFactory $reportCollection,
-								OrderInterface $order,
-								array $data = []
+				    Session $customerSession,CreditlimitFactory $requestModel,
+				    Data $helper,
+				    CreditlimitreportFactory $reportCollection,
+				    OrderInterface $order,
+				    array $data = []
 	)
 	{        
 	  $this->_requestModel = $requestModel;
